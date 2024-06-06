@@ -1,18 +1,16 @@
-//const { application } = require("express");
 const express = require("express");
 const router = express.Router();
-const authcontrollers = require("../Controllers/auth-controller");
-const {signupSchema, loginSchema} = require("../validators/auth-validator");
+const authControllers = require("../controllers/auth-controller");
+const signupSchema = require("../validators/auth-validator");
 const validate = require("../middlewares/validate-middleware");
+const authMiddleware = require("../middlewares/auth-middleware");
 
-// router.get("/", (req,res) => {
-//     res.status(200).send("Welcome to world best mern series by thapa technical using router");
-// });
+router.route("/").get(authControllers.home);
+router
+  .route("/register")
+  .post(validate(signupSchema), authControllers.register);
+router.route("/login").post(authControllers.login);
 
-//another way we can use chaining here
-router.route("/").get(authcontrollers.home);
-
-router.route("/register").post(validate(signupSchema), authcontrollers.register);
-router.route("/login").post(validate(loginSchema), authcontrollers.login);
+router.route("/user").get(authMiddleware, authControllers.user);
 
 module.exports = router;
