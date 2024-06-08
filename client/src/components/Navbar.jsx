@@ -3,7 +3,12 @@ import "./Navbar.css";
 import { useAuth } from "../auth";
 
 export const Navbar = () => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, user, isLoading } = useAuth();
+    console.log("admin layout", user);
+
+    if(isLoading) {
+        return <h1>Loading ...</h1>;
+    }
   return (
     <>
       <header>
@@ -17,6 +22,11 @@ export const Navbar = () => {
               <li>
                 <NavLink to="/"> Home </NavLink>
               </li>
+              {user?.isAdmin && (
+                <li>
+                  <NavLink to="/admin"> Admin </NavLink>
+                </li>
+              )};
               <li>
                 <NavLink to="/about"> About </NavLink>
               </li>

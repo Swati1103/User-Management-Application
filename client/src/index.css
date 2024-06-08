@@ -58,6 +58,13 @@ li {
   list-style: none;
 }
 
+/* react toastify css */
+
+.toastBody {
+  font-family: "Atlas Grotesk Web", Arial, Helvetica, sans-serif;
+  font-size: 1.7rem ;
+}
+
 /*? layout Rule  */
 
 .container {
@@ -432,6 +439,125 @@ a.active {
   font-size: 3.2rem;
   margin: 1.2rem 0 2.4rem 0;
 }
+
+/* Styling for table headers */
+th {
+  font-size: 1.8rem;
+  letter-spacing: 0.1rem;
+  padding: 3rem;
+  color: var(--dark-color);
+  box-shadow: 0 0.3rem 0 grey;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+
+/* Styling for table data cells */
+td {
+  font-size: 1.7rem;
+  letter-spacing: 0.1rem;
+  padding: 3rem;
+  text-align: center;
+  color: var(--dark-color);
+  width: 30rem;
+}
+
+/* Styling for the table */
+table {
+  background: #fff;
+  box-shadow: rgba(255, 255, 255, 0.2) 0px 7px 29px 0px;
+  border-collapse: collapse;
+  border-radius: 1rem;
+  -webkit-border-radius: 1rem;
+  -moz-border-radius: 1rem;
+  -ms-border-radius: 1rem;
+  -o-border-radius: 1rem;
+}
+
+/* Styling for admin contacts section */
+.admin-contacts-section {
+  padding: 2rem;
+}
+
+/* Styling for table rows within admin contacts section */
+.admin-contacts-section tr {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(10rem, 1fr));
+  align-items: center;
+  box-shadow: 0 0.3rem 0 grey;
+  margin-bottom: 10px;
+  border-bottom: 4px solid transparent;
+  color: var(--bg-color);
+}
+
+.admin-contacts-section tr:last-child {
+  box-shadow: none;
+}
+
+/* Styling for table rows within body */
+body tr {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(10rem, 1fr));
+  align-items: center;
+  box-shadow: 0 0.3rem 0 grey;
+  margin-bottom: 10px;
+  border-bottom: 4px solid transparent;
+  color: var(--bg-color);
+}
+
+body tr:last-child {
+  box-shadow: none;
+}
+
+/* Styling for update link */
+.updateLink {
+  background: #cff6dd;
+  color: #1fa750;
+  border-radius: 3rem;
+  padding: 1rem 4rem;
+  -webkit-border-radius: 3rem;
+  -moz-border-radius: 3rem;
+  -ms-border-radius: 3rem;
+  -o-border-radius: 3rem;
+}
+
+.updateLink:hover {
+  color: #cff6dd;
+  background: #1fa750;
+  font-weight: bold;
+}
+
+/* Styling for admin section form */
+.admin-section-form {
+  background-color: var(--bg-color);
+  max-width: 60rem;
+  padding: 0 10rem;
+  color: var(--dark-color);
+  margin-left: 10rem;
+}
+
+.admin-section-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 5rem;
+}
+
+.admin-section-form form div {
+  display: grid;
+}
+
+.admin-section-form form div input {
+  background-color: var(--helper-color);
+  border: none;
+  padding: 1.4rem 0rem 1.4rem 2rem;
+  color: var(--dark-color);
+}
+
+.admin-section-form form div input,
+.admin-section-form form button {
+  max-width: 30rem;
+}
+
 
 
 /** -----------------------
