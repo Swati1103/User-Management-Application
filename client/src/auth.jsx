@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 export const AuthContext = createContext();
 
@@ -39,13 +39,13 @@ export const AuthProvider = ({ children }) => {
   };
 
   //to fetch the services data from the database
-  const getServices = async() => {
+  const getServices = async () => {
     try {
       const response = await fetch(`${API}/api/data/service`, {
         method: "GET",
       });
 
-      if(response.ok){
+      if (response.ok) {
         const data = await response.json();
         console.log(data.msg);
         setServices(data.msg);
@@ -78,7 +78,18 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, storeTokenInLS, LogoutUser, user, services, authorizationToken, isLoading, API, }}>
+    <AuthContext.Provider
+      value={{
+        isLoggedIn,
+        storeTokenInLS,
+        LogoutUser,
+        user,
+        services,
+        authorizationToken,
+        isLoading,
+        API,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

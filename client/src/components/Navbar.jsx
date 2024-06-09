@@ -4,12 +4,11 @@ import { useAuth } from "../auth";
 
 export const Navbar = () => {
   const { isLoggedIn, user, isLoading } = useAuth();
-  console.log("admin layout", user);
+    console.log("admin layout", user);
 
-  if (isLoading) {
-    return <h1>Loading ...</h1>;
-  }
-
+    if(isLoading) {
+        return <h1>Loading ...</h1>;
+    }
   return (
     <>
       <header>
@@ -23,6 +22,11 @@ export const Navbar = () => {
               <li>
                 <NavLink to="/"> Home </NavLink>
               </li>
+              {user?.isAdmin && (
+                <li>
+                  <NavLink to="/admin"> Admin </NavLink>
+                </li>
+              )};
               <li>
                 <NavLink to="/about"> About </NavLink>
               </li>
@@ -33,16 +37,9 @@ export const Navbar = () => {
                 <NavLink to="/contact"> Contact </NavLink>
               </li>
               {isLoggedIn ? (
-                <>
-                  <li>
-                    <NavLink to="/logout"> Logout </NavLink>
-                  </li>
-                  {user?.isAdmin && (
-                    <li>
-                      <NavLink to="/admin"> Admin </NavLink>
-                    </li>
-                  )}
-                </>
+                <li>
+                  <NavLink to="/logout"> Logout </NavLink>
+                </li>
               ) : (
                 <>
                   <li>
@@ -52,7 +49,7 @@ export const Navbar = () => {
                     <NavLink to="/login"> Login </NavLink>
                   </li>
                 </>
-              )}
+              )};
             </ul>
           </nav>
         </div>

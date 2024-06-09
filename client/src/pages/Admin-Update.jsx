@@ -1,80 +1,76 @@
 import { useEffect } from "react";
-import {useState} from "react";
-import {useParams} from "react-router-dom";
-import {useAuth} from "../auth";
-import {toast} from "react-toastify";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useAuth } from "../auth";
+import { toast } from "react-toastify";
 
 export const AdminUpdate = () => {
-    const [data, setData] = useState({
-        username: "",
-        email: "",
-        phone: "",
-        isAdmin: false,
-    });
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [isAdmin, setIsAdmin] = useState("");
 
-    const params = useParams();
-    console.log("params single user ", params);
-    const {authorizationToken, API} = useAuth();
+  const params = useParams();
+  console.log("params single user ", params);
+  const { authorizationToken, API } = useAuth();
 
-    // get single user data
-    const getSingleUserData = async () => {
-        try {
-            const response = await fetch(`${API}/api/admin/users/${params.id}`, {
-                method: "GET",
-                headers: {
-                    Authorization: authorizationToken,
-                },
-            });
-            const data = await response.json();
-            console.log(`users single data: ${data}`);
-            setData(data);
-            // if (response.ok) {
-            //     getAllUsersData();
-            // }
-        } catch (error) {
-            console.log(error);
-        }    
-    };
+  // get single user data
+  const getSingleUserData = async () => {
+    try {
+      const response = await fetch(`${API}/api/admin/users/${params.id}`, {
+        method: "GET",
+        headers: {
+          Authorization: authorizationToken,
+        },
+      });
+      const data = await response.json();
+      console.log(`users single data: ${data}`);
+      console.log(data);
+      setUsername(data.username);
+      setEmail(data.email);
+      setPhone(data.phone);
+      setIsAdmin(data.isAdmin);
+      // if (response.ok) {
+      //     getAllUsersData();
+      // }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    useEffect(() => {
-        getSingleUserData();
-    }, []);
+  useEffect(() => {
+    getSingleUserData();
+  }, []);
 
-    const handleInput = (e) => {
-        let name = e.target.name;
-        let value = e.target.value;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        setData({
-            ...data,
-            [name]: value,
-        });
-    };
-
-   // to update the data dynamically
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-          const response = await fetch(
-            `${API}/api/admin/users/update/${params.id}`,
-            {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: authorizationToken,
-                },
-                body: JSON.stringify(data),
-            }
-          ); 
-          if(response.ok) {
-            toast.success("Updated Successfully");
-          } else {
-            toast.error("Not Updated");
-          }
-        } catch (error) {
-            console.log(error);
+    try {
+      const response = await fetch(
+        `${API}/api/admin/users/update/${params.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: authorizationToken,
+          },
+          body: JSON.stringify({
+            username,
+            email,
+            phone,
+            isAdmin,
+          }),
         }
-    };
+      );
+      if (response.ok) {
+        toast.success("Updated Successfully");
+      } else {
+        toast.error("Not Updated");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <section className="section-contact">
       <div className="contact-content container">
@@ -92,8 +88,8 @@ export const AdminUpdate = () => {
                 name="username"
                 id="username"
                 autoComplete="off"
-                value={data.username}
-                onChange={handleInput}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
@@ -105,8 +101,8 @@ export const AdminUpdate = () => {
                 name="email"
                 id="email"
                 autoComplete="off"
-                value={data.email}
-                onChange={handleInput}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -114,12 +110,12 @@ export const AdminUpdate = () => {
             <div>
               <label htmlFor="phone">Mobile</label>
               <input
-                type="phone"
+                type="tel"
                 name="phone"
                 id="phone"
                 autoComplete="off"
-                value={data.phone}
-                onChange={handleInput}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 required
               />
             </div>
@@ -130,8 +126,8 @@ export const AdminUpdate = () => {
                 type="checkbox"
                 name="isAdmin"
                 id="isAdmin"
-                checked={data.isAdmin}
-                onChange={handleInput}
+                checked={isAdmin}
+                onChange={() => setIsAdmin(!isAdmin)}
               />
             </div>
 

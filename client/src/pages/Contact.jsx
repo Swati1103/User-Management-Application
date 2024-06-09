@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAuth } from "../auth";
 
 const defaultContactFormData = {
@@ -10,15 +10,17 @@ const defaultContactFormData = {
 // type UserAuth = boolean;
 export const Contact = () => {
   const [data, setData] = useState(defaultContactFormData);
-
   const [userData, setUserData] = useState(true);
-
+  const [contact, setContact] = useState(defaultContactFormData);
   const { user, API } = useAuth();
+  const name = useRef();
+  const mail = useRef();
+  const msg = useRef();
 
-  console.log("frontend user ", user.email);
+  // console.log("frontend user ", user.email);
 
   if (userData && user) {
-    setContact({
+    setData({
       username: user.username,
       email: user.email,
       message: "",
@@ -37,14 +39,14 @@ export const Contact = () => {
         body: JSON.stringify(data),
       });
 
-      console.log("response: ", response);
+      // console.log("response: ", response);
       // alert(response);
 
       if (response.ok) {
         setData(defaultContactFormData);
         const responseData = await response.json();
         alert(responseData);
-        console.log(responseData);
+        // console.log(responseData);
       } else {
         // Handle API error here
         console.error("API Error:", response.status, response.statusText);
@@ -59,12 +61,11 @@ export const Contact = () => {
     const name = e.target.name;
     const value = e.target.value;
 
-    setContact({
-      ...contact,
+    setData({
+      ...data,
       [name]: value,
     });
   };
-
 
   return (
     <>
@@ -88,7 +89,7 @@ export const Contact = () => {
                   name="username"
                   id="username"
                   autoComplete="off"
-                  value={data.username}
+                  // value={data.username}
                   onChange={handleInput}
                   required
                 />
@@ -101,7 +102,7 @@ export const Contact = () => {
                   name="email"
                   id="email"
                   autoComplete="off"
-                  value={data.email}
+                  // value={data.email}
                   onChange={handleInput}
                   required
                 />
@@ -113,7 +114,7 @@ export const Contact = () => {
                   name="message"
                   id="message"
                   autoComplete="off"
-                  value={data.message}
+                  // value={data.message}
                   onChange={handleInput}
                   required
                   cols="30"
@@ -122,7 +123,7 @@ export const Contact = () => {
               </div>
 
               <div>
-                <button type="submit">submit</button>
+                <button type="submit">Submit</button>
               </div>
             </form>
           </section>
