@@ -50,6 +50,7 @@ export const AdminUpdate = () => {
         });
     };
 
+   // to update the data dynamically
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -117,7 +118,7 @@ export const AdminUpdate = () => {
                 name="phone"
                 id="phone"
                 autoComplete="off"
-                value={data.email}
+                value={data.phone}
                 onChange={handleInput}
                 required
               />

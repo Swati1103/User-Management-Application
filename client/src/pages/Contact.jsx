@@ -9,7 +9,7 @@ const defaultContactFormData = {
 
 // type UserAuth = boolean;
 export const Contact = () => {
-  const [contact, setContact] = useState(defaultContactFormData);
+  const [data, setData] = useState(defaultContactFormData);
 
   const [userData, setUserData] = useState(true);
 
@@ -26,7 +26,7 @@ export const Contact = () => {
     setUserData(false);
   }
 
-  const handleSubmit = async (e) => {
+  const handleContactForm = async (e) => {
     e.preventDefault();
     try {
       const response = await fetch(`${API}/api/form/contact`, {
@@ -37,16 +37,32 @@ export const Contact = () => {
         body: JSON.stringify(data),
       });
 
-      if(response.ok) {
-        setContact(defaultContactFormData);
-        const data = await response.json();
-        console.log(data);
-        alert("Message send successfully");
-      }    
+      console.log("response: ", response);
+      // alert(response);
+
+      if (response.ok) {
+        setData(defaultContactFormData);
+        const responseData = await response.json();
+        alert(responseData);
+        console.log(responseData);
+      } else {
+        // Handle API error here
+        console.error("API Error:", response.status, response.statusText);
+      }
     } catch (error) {
-      alert("Message not send");
       console.error(error);
     }
+  };
+
+  // lets tackle our handleInput
+  const handleInput = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setContact({
+      ...contact,
+      [name]: value,
+    });
   };
 
 
@@ -64,7 +80,7 @@ export const Contact = () => {
 
           {/* contact form content actual  */}
           <section className="section-form">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleContactForm}>
               <div>
                 <label htmlFor="username">username</label>
                 <input
@@ -72,7 +88,7 @@ export const Contact = () => {
                   name="username"
                   id="username"
                   autoComplete="off"
-                  value={contact.username}
+                  value={data.username}
                   onChange={handleInput}
                   required
                 />
@@ -85,7 +101,7 @@ export const Contact = () => {
                   name="email"
                   id="email"
                   autoComplete="off"
-                  value={contact.email}
+                  value={data.email}
                   onChange={handleInput}
                   required
                 />
@@ -97,7 +113,7 @@ export const Contact = () => {
                   name="message"
                   id="message"
                   autoComplete="off"
-                  value={contact.message}
+                  value={data.message}
                   onChange={handleInput}
                   required
                   cols="30"
